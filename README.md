@@ -4,6 +4,7 @@ This repository contains a sample Microservices application, based on learning f
 - [1. mango-restaurant](#1-mango-restaurant)
   - [1.1. Introduction](#11-introduction)
   - [1.2. Deviations](#12-deviations)
+  - [1.3. Technologies Used](#13-technologies-used)
   
 ## 1.1. Introduction
 
@@ -12,3 +13,9 @@ Repository containing tracking the creation of a project looking at ASP.NET Core
 ## 1.2. Deviations
 
 - Decided to write the web components with Razor Pages (instead of MVC, as used during the course). Has allowed me to customise the solution somewhat.
+
+## 1.3. Technologies Used
+
+- ASP.NET Core Razor Pages.
+- ASP.NET Core Web API.
+- Azure Service Bus.
