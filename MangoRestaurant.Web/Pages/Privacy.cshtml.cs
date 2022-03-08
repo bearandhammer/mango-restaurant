@@ -14,6 +14,7 @@ namespace MangoRestaurant.Web.Pages
 
         public void OnGet()
         {
+            // A change!
         }
     }
 }
