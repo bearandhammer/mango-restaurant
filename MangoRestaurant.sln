@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Web", "MangoRestaurant.Web\MangoRestaurant.Web.csproj", "{9615F1CF-9C1A-4D7A-81CE-7F8892012427}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Product.API", "MangoRestaurant.Product.API\MangoRestaurant.Product.API.csproj", "{5DE25684-1EDD-4AEE-B98F-B5E6532FE6B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoRestaurant.Product.API", "MangoRestaurant.Product.API\MangoRestaurant.Product.API.csproj", "{39340484-3F4A-4089-9AB2-41DEC82AD647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{9615F1CF-9C1A-4D7A-81CE-7F8892012427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9615F1CF-9C1A-4D7A-81CE-7F8892012427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9615F1CF-9C1A-4D7A-81CE-7F8892012427}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DE25684-1EDD-4AEE-B98F-B5E6532FE6B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DE25684-1EDD-4AEE-B98F-B5E6532FE6B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DE25684-1EDD-4AEE-B98F-B5E6532FE6B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DE25684-1EDD-4AEE-B98F-B5E6532FE6B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39340484-3F4A-4089-9AB2-41DEC82AD647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39340484-3F4A-4089-9AB2-41DEC82AD647}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39340484-3F4A-4089-9AB2-41DEC82AD647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39340484-3F4A-4089-9AB2-41DEC82AD647}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
