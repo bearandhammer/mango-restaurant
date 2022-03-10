@@ -20,6 +20,6 @@ namespace MangoRestaurant.Product.API.Context
         /// <summary>
         /// Gets or sets the Mango Restaurant Product entities.
         /// </summary>
-        public DbSet<Models.Product> Products { get; set; }
+        public DbSet<Models.Entities.Product> Products { get; set; }
     }
 }
