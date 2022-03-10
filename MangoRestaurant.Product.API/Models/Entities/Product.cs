@@ -1,7 +1,7 @@
 ﻿using MangoRestaurant.Product.API.Models.Base;
 using System.ComponentModel.DataAnnotations;
 
-namespace MangoRestaurant.Product.API.Models
+namespace MangoRestaurant.Product.API.Models.Entities
 {
     /// <summary>
     /// Represents a Mango Restaurant Product.
