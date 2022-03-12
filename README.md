@@ -1,5 +1,7 @@
 # 1. mango-restaurant
 
+***NOTE: Important - Work in progress and is not representive of how I would structure this if writting this from scratch***
+
 This repository contains a sample Microservices application, based on learning from a Udemy sample (detailed below).
 - [1. mango-restaurant](#1-mango-restaurant)
   - [1.1. Introduction](#11-introduction)
