@@ -1,6 +1,6 @@
 # 1. mango-restaurant
 
-***NOTE: Very rough work following a course (so I can get to areas around Ocelot and Azure Service Bus - not production code (or representative of code I would typically produce).***
+<span style="color:red">***NOTE: Very rough work following a course (so I can get to areas around Ocelot and Azure Service Bus - not production code and is not representative of code I would typically produce.***</span>
 
 This repository contains a sample Microservices application, based on learning from a Udemy sample (detailed below).
 - [1. mango-restaurant](#1-mango-restaurant)
