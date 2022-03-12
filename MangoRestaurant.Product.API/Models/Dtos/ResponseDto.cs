@@ -6,7 +6,7 @@ namespace MangoRestaurant.Product.API.Models.Dtos
     /// Represents a response wrapper for all results from returned for this API.
     /// </summary>
     /// <typeparam name="TResult">The type of the result.</typeparam>
-    public class ResponseDto<TResult> where TResult : BaseDto
+    public class ResponseDto<TResult> where TResult : class
     {
         /// <summary>
         /// Gets or sets the Display Message.
