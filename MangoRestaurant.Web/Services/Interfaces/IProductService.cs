@@ -1,8 +1,10 @@
 ﻿using MangoRestaurant.Web.Models.Dtos;
+using MangoRestaurant.Web.Services.Base.Interfaces;
 
 namespace MangoRestaurant.Web.Services.Interfaces
 {
-    public interface IProductService
+    // TODO - Follow materials here, need to readjust all of this, however
+    public interface IProductService : IBaseService
     {
         Task<T> GetAllProductsAsync<T>();
         Task<T> GetProductByIdAsync<T>(int id);
