@@ -16,6 +16,7 @@ namespace MangoRestaurant.Product.API.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<ResponseDto<bool>> Delete(int id)
         {
             // TODO: ICollection?

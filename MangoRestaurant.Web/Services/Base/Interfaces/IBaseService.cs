@@ -1,11 +1,10 @@
 ﻿using MangoRestaurant.Web.Models.Dtos;
 using MangoRestaurant.Web.Models.Requests;
 
-namespace MangoRestaurant.Web.Services.Base.Intefaces
+namespace MangoRestaurant.Web.Services.Base.Interfaces
 {
-    public interface IBaseService<TResponseType> : IDisposable
+    public interface IBaseService : IDisposable
     {
-        ResponseDto<TResponseType> ResponseModel { get; set; }
-        Task<T> SendAsync<T>(ApiRequest<T> apiRequest);
+        Task<T> SendAsync<T>(ApiRequest apiRequest);
     }
 }
