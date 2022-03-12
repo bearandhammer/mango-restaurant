@@ -18,9 +18,27 @@ namespace MangoRestaurant.Product.API.Repositories
             mapper = mapperType;
         }
 
-        public Task<bool> DeleteProduct(int productId)
+        public async Task<bool> DeleteProduct(int productId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Models.Entities.Product productToDelete = await dbContext.Products.FirstOrDefaultAsync(product => product.Id == productId);
+
+                if (productToDelete == null)
+                {
+                    return false;
+                }
+
+                dbContext.Products.Remove(productToDelete);
+                await dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // TODO - Log
+                return false;
+            }
         }
 
         public async Task<IEnumerable<ProductDto>> GetAllProducts()
@@ -32,14 +50,30 @@ namespace MangoRestaurant.Product.API.Repositories
 
         public async Task<ProductDto> GetProductById(int productId)
         {
+            // TODO - handle the possibility of 'no match'
             Models.Entities.Product discoveredProduct = await dbContext.Products.FirstOrDefaultAsync(product => product.Id == productId);
 
             return mapper.Map<ProductDto>(discoveredProduct);
         }
 
-        public Task<ProductDto> UpsertProduct(ProductDto productDto)
+        public async Task<ProductDto> UpsertProduct(ProductDto productDto)
         {
-            throw new NotImplementedException();
+            Models.Entities.Product productToSave = mapper.Map<Models.Entities.Product>(productDto);
+
+            if (productToSave.Id > 0)
+            {
+                // Update
+                dbContext.Products.Update(productToSave);
+            }
+            else
+            {
+                // Insert
+                dbContext.Products.Add(productToSave);
+            }
+
+            await dbContext.SaveChangesAsync();
+
+            return mapper.Map<ProductDto>(productToSave);
         }
     }
 }
