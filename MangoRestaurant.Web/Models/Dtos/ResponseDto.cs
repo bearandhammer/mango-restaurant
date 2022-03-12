@@ -1,6 +1,4 @@
-﻿using MangoRestaurant.Product.API.Models.Dtos.Base;
-
-namespace MangoRestaurant.Product.API.Models.Dtos
+﻿namespace MangoRestaurant.Web.Models.Dtos
 {
     /// <summary>
     /// Represents a response wrapper for all results from returned for this API.

@@ -1,11 +1,13 @@
 using AutoMapper;
 using MangoRestaurant.Product.API.Context;
 using MangoRestaurant.Product.API.Mappings;
+using MangoRestaurant.Product.API.Repositories;
+using MangoRestaurant.Product.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Register the DbContext
 builder.Services.AddDbContext<ProductDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProductAPIConnectionString")));
 
@@ -13,6 +15,9 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 IMapper mapper = AutoMapperConfig.RegisterMappings().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// Register custom services
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
