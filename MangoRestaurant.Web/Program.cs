@@ -1,6 +1,19 @@
+using MangoRestaurant.Web.Services;
+using MangoRestaurant.Web.Services.Interfaces;
+using MangoRestaurant.Web.Utility;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add HTTP Clients
+builder.Services.AddHttpClient<IProductService, ProductService>();
+
+// Configure Base URLs
+ApiHelper.ProductApiBase = builder.Configuration["APIBaseUrls:ProductAPI"];
+
+// Register Services
+builder.Services.AddScoped<IProductService, ProductService>();
+
+// Add Razor Pages
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -15,11 +28,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapRazorPages();
 
 app.Run();
