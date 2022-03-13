@@ -1,6 +1,7 @@
 using Duende.IdentityServer;
 using MangoRestaurant.Services.Identity.Data;
 using MangoRestaurant.Services.Identity.Models;
+using MangoRestaurant.Services.Identity.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -14,7 +15,7 @@ namespace MangoRestaurant.Services.Identity
             builder.Services.AddRazorPages();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MangoIdentityServer")));
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -28,25 +29,14 @@ namespace MangoRestaurant.Services.Identity
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
 
-                // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                options.EmitStaticAudienceClaim = true;
+                    // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
+                    options.EmitStaticAudienceClaim = true;
                 })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
-                .AddAspNetIdentity<ApplicationUser>();
-
-            builder.Services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-                // register your IdentityServer with Google at https://console.developers.google.com
-                // enable the Google+ API
-                // set the redirect URI to https://localhost:5001/signin-google
-                options.ClientId = "copy client ID from Google here";
-                    options.ClientSecret = "copy client secret from Google here";
-                });
+                .AddInMemoryIdentityResources(IdentityHelper.IdentityResources)
+                .AddInMemoryApiScopes(IdentityHelper.ApiScopes)
+                .AddInMemoryClients(IdentityHelper.Clients)
+                .AddAspNetIdentity<ApplicationUser>()
+                .AddDeveloperSigningCredential();
 
             return builder.Build();
         }
