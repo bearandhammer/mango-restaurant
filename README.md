@@ -7,6 +7,7 @@ This repository contains a sample Microservices application, based on learning f
   - [1.1. Introduction](#11-introduction)
   - [1.2. Deviations](#12-deviations)
   - [1.3. Technologies Used](#13-technologies-used)
+  - [1.4 Concepts](#14-concepts)
   
 ## 1.1. Introduction
 
@@ -21,3 +22,7 @@ Repository containing tracking the creation of a project looking at ASP.NET Core
 - ASP.NET Core Razor Pages.
 - ASP.NET Core Web API.
 - Azure Service Bus.
+
+## 1.4 Concepts
+
+- Identity Server. [V6 Reference Docs](https://docs.duendesoftware.com/identityserver/v6).
