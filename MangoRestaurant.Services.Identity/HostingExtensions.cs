@@ -1,5 +1,7 @@
 using Duende.IdentityServer;
 using MangoRestaurant.Services.Identity.Data;
+using MangoRestaurant.Services.Identity.Initializer;
+using MangoRestaurant.Services.Identity.Initializer.Interfaces;
 using MangoRestaurant.Services.Identity.Models;
 using MangoRestaurant.Services.Identity.Utilities;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +40,8 @@ namespace MangoRestaurant.Services.Identity
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddDeveloperSigningCredential();
 
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
             return builder.Build();
         }
 
@@ -57,6 +61,12 @@ namespace MangoRestaurant.Services.Identity
 
             app.MapRazorPages()
                 .RequireAuthorization();
+
+            using (IServiceScope scope = app.Services.CreateScope())
+            {
+                IDbInitializer dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                dbInitializer.Initialize();
+            } 
 
             return app;
         }
