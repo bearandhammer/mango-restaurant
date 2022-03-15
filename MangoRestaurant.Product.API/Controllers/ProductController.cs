@@ -1,10 +1,12 @@
 ﻿using MangoRestaurant.Product.API.Models.Dtos;
 using MangoRestaurant.Product.API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MangoRestaurant.Product.API.Controllers
 {
     // TODO - Tidy implementation, would prefer to split into services (clean this down)
+    [Authorize]
     [Route("api/products")]
     public class ProductController : ControllerBase
     {
@@ -15,6 +17,7 @@ namespace MangoRestaurant.Product.API.Controllers
             productRepository = productRepo;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<ResponseDto<bool>> Delete(int id)
