@@ -16,5 +16,15 @@ namespace MangoRestaurant.Web.Pages
         {
 
         }
+
+        public void OnGetLogin()
+        {
+
+        }
+
+        public void OnGetLogout()
+        {
+
+        }
     }
 }
