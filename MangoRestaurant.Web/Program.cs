@@ -16,6 +16,29 @@ builder.Services.AddScoped<IProductService, ProductService>();
 // Add Razor Pages
 builder.Services.AddRazorPages();
 
+// Configure Security
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = "oidc";
+})
+.AddCookie("Cookies", options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(int.Parse(builder.Configuration["AuthSettings:TimeoutInMinutes"]));
+})
+.AddOpenIdConnect("oidc", options => 
+{
+    options.Authority = builder.Configuration["APIBaseUrls:IdentityAPI"];
+    options.GetClaimsFromUserInfoEndpoint = true;
+    options.ClientId = builder.Configuration["AuthSettings:ClientId"];
+    options.ClientSecret = builder.Configuration["AuthSettings:ClientSecret"];
+    options.ResponseType = "code";
+    options.TokenValidationParameters.NameClaimType = "name";
+    options.TokenValidationParameters.RoleClaimType = "role";
+    options.Scope.Add(builder.Configuration["AuthSettings:Scope"]);
+    options.SaveTokens = true;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +52,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 
