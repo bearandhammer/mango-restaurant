@@ -48,8 +48,8 @@ namespace MangoRestaurant.Services.Identity.Utilities
                     // Not for production, of course
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = { "https://localhost:25549/signin-oidc" },
-                    PostLogoutRedirectUris = { "https://localhost:25549/signout-callback-oidc" },
+                    RedirectUris = { "http://localhost:44337/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:44337/signout-callback-oidc" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
