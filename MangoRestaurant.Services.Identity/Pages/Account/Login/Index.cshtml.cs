@@ -7,9 +7,11 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
 using Duende.IdentityServer.Test;
+using MangoRestaurant.Services.Identity.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,7 +21,9 @@ namespace mango_restaurant.Pages.Login;
 [AllowAnonymous]
 public class Index : PageModel
 {
-    private readonly TestUserStore _users;
+    private readonly UserManager<ApplicationUser> userManager;
+    private readonly SignInManager<ApplicationUser> signInManager;
+    private readonly RoleManager<IdentityRole> roleManager;
     private readonly IIdentityServerInteractionService _interaction;
     private readonly IClientStore _clientStore;
     private readonly IEventService _events;
@@ -37,16 +41,18 @@ public class Index : PageModel
         IAuthenticationSchemeProvider schemeProvider,
         IIdentityProviderStore identityProviderStore,
         IEventService events,
-        TestUserStore users = null)
+        UserManager<ApplicationUser> userManagerType,
+        SignInManager<ApplicationUser> signInManagerType,
+        RoleManager<IdentityRole> roleManagerType)
     {
-        // this is where you would plug in your own custom identity management library (e.g. ASP.NET Identity)
-        _users = users ?? throw new Exception("Please call 'AddTestUsers(TestUsers.Users)' on the IIdentityServerBuilder in Startup or remove the TestUserStore from the AccountController.");
-            
         _interaction = interaction;
         _clientStore = clientStore;
         _schemeProvider = schemeProvider;
         _identityProviderStore = identityProviderStore;
         _events = events;
+        userManager = userManagerType;
+        signInManager = signInManagerType;
+        roleManager = roleManagerType;
     }
         
     public async Task<IActionResult> OnGet(string returnUrl)
@@ -96,46 +102,18 @@ public class Index : PageModel
 
         if (ModelState.IsValid)
         {
-            // validate username/password against in-memory store
-            if (_users.ValidateCredentials(Input.Username, Input.Password))
+            Microsoft.AspNetCore.Identity.SignInResult accessResult = await signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberLogin, false);
+
+            if (accessResult.Succeeded)
             {
-                var user = _users.FindByUsername(Input.Username);
-                await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username, clientId: context?.Client.ClientId));
-
-                // only set explicit expiration here if user chooses "remember me". 
-                // otherwise we rely upon expiration configured in cookie middleware.
-                AuthenticationProperties props = null;
-                if (LoginOptions.AllowRememberLogin && Input.RememberLogin)
-                {
-                    props = new AuthenticationProperties
-                    {
-                        IsPersistent = true,
-                        ExpiresUtc = DateTimeOffset.UtcNow.Add(LoginOptions.RememberMeLoginDuration)
-                    };
-                };
-
-                // issue authentication cookie with subject ID and username
-                var isuser = new IdentityServerUser(user.SubjectId)
-                {
-                    DisplayName = user.Username
-                };
-
-                await HttpContext.SignInAsync(isuser, props);
+                ApplicationUser signedInUser = await userManager.FindByNameAsync(Input.Username);
+                await _events.RaiseAsync(new UserLoginSuccessEvent(signedInUser.UserName, signedInUser.Id, $"{ signedInUser.FirstName } { signedInUser.LastName }", clientId: context?.Client?.ClientId));
 
                 if (context != null)
                 {
-                    if (context.IsNativeClient())
-                    {
-                        // The client is native, so this change in how to
-                        // return the response is for better UX for the end user.
-                        return this.LoadingPage(Input.ReturnUrl);
-                    }
-
-                    // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                     return Redirect(Input.ReturnUrl);
                 }
 
-                // request for a local page
                 if (Url.IsLocalUrl(Input.ReturnUrl))
                 {
                     return Redirect(Input.ReturnUrl);
