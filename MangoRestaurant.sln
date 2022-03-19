@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Web", "Mang
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Product.API", "MangoRestaurant.Product.API\MangoRestaurant.Product.API.csproj", "{39340484-3F4A-4089-9AB2-41DEC82AD647}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangoRestaurant.Services.Identity", "MangoRestaurant.Services.Identity\MangoRestaurant.Services.Identity.csproj", "{7947D437-9DC9-4CF3-8490-3113C6C6260B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Services.Identity", "MangoRestaurant.Services.Identity\MangoRestaurant.Services.Identity.csproj", "{7947D437-9DC9-4CF3-8490-3113C6C6260B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

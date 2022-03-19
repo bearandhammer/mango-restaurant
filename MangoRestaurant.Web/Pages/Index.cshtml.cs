@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MangoRestaurant.Web.Pages
@@ -13,16 +14,6 @@ namespace MangoRestaurant.Web.Pages
         }
 
         public void OnGet()
-        {
-
-        }
-
-        public void OnGetLogin()
-        {
-
-        }
-
-        public void OnGetLogout()
         {
 
         }

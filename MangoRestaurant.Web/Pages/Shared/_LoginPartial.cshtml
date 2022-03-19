@@ -6,12 +6,12 @@
         <a class="nav-link" href="#">Hello @User.Identity.Name</a>
     </li>
     <li class="nav-item pt-lg-1">
-        <a class="nav-link" asp-area="" asp-page-handler="Logout" asp-page="/Index">Logout</a>
+        <a class="nav-link" asp-area="" asp-page="/Logout">Logout</a>
     </li>
 }
 else
 {
     <li class="nav-item pt-lg-1">
-        <a class="nav-link" asp-area="" asp-page-handler="Login" asp-page="/Index">Login</a>
+        <a class="nav-link" asp-area="" asp-page="/Login">Login</a>
     </li>
 }
