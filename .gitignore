@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Developer JSON Web Key
 *.jwk
+
+# Identity Server Signing Keys
+**/keys/*.json
