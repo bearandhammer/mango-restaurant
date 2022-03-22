@@ -107,7 +107,7 @@ public class Index : PageModel
             if (accessResult.Succeeded)
             {
                 ApplicationUser signedInUser = await userManager.FindByNameAsync(Input.Username);
-                await _events.RaiseAsync(new UserLoginSuccessEvent(signedInUser.UserName, signedInUser.Id, $"{ signedInUser.FirstName } { signedInUser.LastName }", clientId: context?.Client?.ClientId));
+                await _events.RaiseAsync(new UserLoginSuccessEvent(signedInUser.UserName, signedInUser.Id, signedInUser.UserName, clientId: context?.Client?.ClientId));
 
                 if (context != null)
                 {
