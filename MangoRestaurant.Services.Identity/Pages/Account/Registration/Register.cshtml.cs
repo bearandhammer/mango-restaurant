@@ -2,13 +2,13 @@ using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MangoRestaurant.Services.Identity.Pages.Account.Register
+namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
 {
-    public class RegistercshtmlModel : PageModel
+    public class RegisterModel : PageModel
     {
         private readonly IIdentityServerInteractionService interaction;
 
-        public RegistercshtmlModel(
+        public RegisterModel(
             IIdentityServerInteractionService interactionType)
         {
             interaction = interactionType;
