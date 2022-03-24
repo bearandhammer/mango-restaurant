@@ -24,6 +24,8 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
 
         public bool EnableLocalLogin { get; set; } = true;
 
+        public List<string> Roles { get; set; } = new List<string>();
+
         // TODO: Lift from quick start
         //public IEnumerable<ExternalProvider> ExternalProviders { get; set; } = Enumerable.Empty<ExternalProvider>();
         //public IEnumerable<ExternalProvider> VisibleExternalProviders => ExternalProviders.Where(x => !String.IsNullOrWhiteSpace(x.DisplayName));
