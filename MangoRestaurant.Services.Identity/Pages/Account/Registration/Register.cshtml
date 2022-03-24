@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="@Model.RegisterViewModel.RoleName"></label>
-                            <select asp-for="@Model.RegisterViewModel.RoleName" class="form-control" asp-items="@(new SelectList(ViewBag.message))"></select>
+                            <select asp-for="@Model.RegisterViewModel.RoleName" class="form-control" asp-items="@(new SelectList(@Model.RegisterViewModel.Roles))"></select>
                         </div>
                         <button class="btn btn-primary" name="button" value="Register">Register</button>
                         <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
