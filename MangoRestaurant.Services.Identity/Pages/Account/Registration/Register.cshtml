@@ -51,7 +51,8 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <a href="@Url.Action("Login",new {Model.ReturnUrl })">Login</a>
+                    <!--TODO: Redirect to correct page-->
+                    <a href="@Url.Action("Login", new { @Model.RegisterViewModel.ReturnUrl })">Login</a>
                 </div>
             </div>
         </div>
