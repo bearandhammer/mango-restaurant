@@ -20,9 +20,11 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
 
         public async Task OnGet(string returnUrl)
         {
+            RegisterViewModel = new RegisterViewModel();
+            
             AuthorizationRequest context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
-            List<string> roles = GetPredefinedApplicationRoles();
+            RegisterViewModel.Roles = GetPredefinedApplicationRoles();       
         }
 
         private static List<string> GetPredefinedApplicationRoles() =>
