@@ -80,6 +80,15 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
                 }
             }
 
+            // TODO: Need the Quickstart types to fix this
+            // RegisterViewModel.AllowRememberLogin = AccountOptions.AllowRememberLogin;
+            // RegisterViewModel.EnableLocalLogin = allowLocal && AccountOptions.AllowLocalLogin;
+            RegisterViewModel.ReturnUrl = returnUrl;
+            RegisterViewModel.Username = context?.LoginHint;
+            
+            // TODO: Address external providers    
+            //ExternalProviders = providers.ToArray()
+
             return Page();
         }
 
