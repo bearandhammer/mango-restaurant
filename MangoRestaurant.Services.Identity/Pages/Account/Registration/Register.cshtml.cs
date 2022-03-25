@@ -1,5 +1,6 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+using Duende.IdentityServer.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,12 +13,16 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
 
         private readonly IAuthenticationSchemeProvider schemeProvider;
 
+        private readonly IClientStore clientStore;
+
         public RegisterModel(
             IIdentityServerInteractionService interactionType,
-            IAuthenticationSchemeProvider schemeProviderType)
+            IAuthenticationSchemeProvider schemeProviderType
+            IClientStore clientStoreType)
         {
             interaction = interactionType;
             schemeProvider = schemeProviderType;
+            clientStore = clientStoreType;
         }
 
         [BindProperty]
@@ -58,6 +63,22 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
             //        DisplayName = x.DisplayName ?? x.Name,
             //        AuthenticationScheme = x.Name
             //    }).ToList();
+
+            bool allowLocal = true;
+            if (context?.Client.ClientId != null)
+            {
+                var client = await clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
+                if (client != null)
+                {
+                    allowLocal = client.EnableLocalLogin;
+
+                    if (client.IdentityProviderRestrictions != null && client.IdentityProviderRestrictions.Any())
+                    {
+                        // TODO: Allow providers
+                        //providers = providers.Where(provider => client.IdentityProviderRestrictions.Contains(provider.AuthenticationScheme)).ToList();
+                    }
+                }
+            }
 
             return Page();
         }
