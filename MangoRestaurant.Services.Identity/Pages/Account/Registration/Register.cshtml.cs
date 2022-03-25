@@ -92,6 +92,19 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
             return Page();
         }
 
+        public async Task<IActionResult> OnPost()
+        {
+            // TODO: Consider return url
+
+            if (ModelState.IsValid)
+            {
+                // Save User...
+            }
+
+            // Issue on post - redisplay the page
+            return Page();
+        }
+
         private static List<string> GetPredefinedApplicationRoles() =>
             new List<string>
             {
