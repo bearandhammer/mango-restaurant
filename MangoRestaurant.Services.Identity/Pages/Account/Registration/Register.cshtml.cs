@@ -1,5 +1,6 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,22 +10,45 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
     {
         private readonly IIdentityServerInteractionService interaction;
 
+        private readonly IAuthenticationSchemeProvider schemeProvider;
+
         public RegisterModel(
-            IIdentityServerInteractionService interactionType)
+            IIdentityServerInteractionService interactionType,
+            IAuthenticationSchemeProvider schemeProviderType)
         {
             interaction = interactionType;
+            schemeProvider = schemeProviderType;
         }
 
         [BindProperty]
         public RegisterViewModel RegisterViewModel { get; set; }
 
-        public async Task OnGet(string returnUrl)
+        public async Task<IActionResult> OnGet(string returnUrl)
         {
             RegisterViewModel = new RegisterViewModel();
+            RegisterViewModel.Roles = GetPredefinedApplicationRoles();       
             
             AuthorizationRequest context = await interaction.GetAuthorizationContextAsync(returnUrl);
 
-            RegisterViewModel.Roles = GetPredefinedApplicationRoles();       
+            if (context?.IdP != null && await schemeProvider.GetSchemeAsync(context.IdP) != null)
+            {
+                bool isLocal = context.IdP == Duende.IdentityServer.IdentityServerConstants.LocalIdentityProvider;
+
+                // this is meant to short circuit the UI and only trigger the one external IdP
+                RegisterViewModel.EnableLocalLogin = isLocal;
+                RegisterViewModel.ReturnUrl = returnUrl;
+                RegisterViewModel.Username = context?.LoginHint;
+
+                // TODO - Setup External Providers
+                //if (!local)
+                //{
+                //    vm.ExternalProviders = new[] { new ExternalProvider { AuthenticationScheme = context.IdP } };
+                //}
+
+                return Page();
+            }
+
+            return Page();
         }
 
         private static List<string> GetPredefinedApplicationRoles() =>
