@@ -17,7 +17,7 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
 
         public RegisterModel(
             IIdentityServerInteractionService interactionType,
-            IAuthenticationSchemeProvider schemeProviderType
+            IAuthenticationSchemeProvider schemeProviderType,
             IClientStore clientStoreType)
         {
             interaction = interactionType;
