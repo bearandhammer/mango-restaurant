@@ -48,6 +48,17 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
                 return Page();
             }
 
+            IEnumerable<AuthenticationScheme> schemes = await schemeProvider.GetAllSchemesAsync();
+
+            // TODO - Allow External Providers
+            //var providers = schemes
+            //    .Where(x => x.DisplayName != null)
+            //    .Select(x => new ExternalProvider
+            //    {
+            //        DisplayName = x.DisplayName ?? x.Name,
+            //        AuthenticationScheme = x.Name
+            //    }).ToList();
+
             return Page();
         }
 
