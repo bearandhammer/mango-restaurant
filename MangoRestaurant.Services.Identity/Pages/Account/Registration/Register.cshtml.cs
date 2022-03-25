@@ -67,7 +67,7 @@ namespace MangoRestaurant.Services.Identity.Pages.Account.Registration
             bool allowLocal = true;
             if (context?.Client.ClientId != null)
             {
-                var client = await clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
+                Client client = await clientStore.FindEnabledClientByIdAsync(context.Client.ClientId);
                 if (client != null)
                 {
                     allowLocal = client.EnableLocalLogin;
