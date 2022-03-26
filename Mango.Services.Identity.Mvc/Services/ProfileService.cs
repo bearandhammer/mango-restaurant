@@ -14,10 +14,11 @@ namespace Mango.Services.Identity.Services
 {
     public class ProfileService : IProfileService
     {
+        private readonly RoleManager<IdentityRole> _roleMgr;
 
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
+
         private readonly UserManager<ApplicationUser> _userMgr;
-        private readonly RoleManager<IdentityRole> _roleMgr;
 
         public ProfileService(
             UserManager<ApplicationUser> userMgr,
@@ -32,9 +33,9 @@ namespace Mango.Services.Identity.Services
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             string sub = context.Subject.GetSubjectId();
+
             ApplicationUser user = await _userMgr.FindByIdAsync(sub);
             ClaimsPrincipal userClaims = await _userClaimsPrincipalFactory.CreateAsync(user);
-
 
             List<Claim> claims = userClaims.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
@@ -43,7 +44,7 @@ namespace Mango.Services.Identity.Services
             if (_userMgr.SupportsUserRole)
             {
                 IList<string> roles = await _userMgr.GetRolesAsync(user);
-                foreach(var rolename in roles)
+                foreach (var rolename in roles)
                 {
                     claims.Add(new Claim(JwtClaimTypes.Role, rolename));
                     if (_roleMgr.SupportsRoleClaims)
