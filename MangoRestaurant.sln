@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Product.API
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MangoRestaurant.Services.Identity", "MangoRestaurant.Services.Identity\MangoRestaurant.Services.Identity.csproj", "{7947D437-9DC9-4CF3-8490-3113C6C6260B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Services.Identity", "Mango.Services.Identity.Mvc\Mango.Services.Identity.csproj", "{97FA5D05-5FBF-4AE5-A03B-30F1B64D50D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7947D437-9DC9-4CF3-8490-3113C6C6260B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7947D437-9DC9-4CF3-8490-3113C6C6260B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7947D437-9DC9-4CF3-8490-3113C6C6260B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97FA5D05-5FBF-4AE5-A03B-30F1B64D50D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97FA5D05-5FBF-4AE5-A03B-30F1B64D50D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97FA5D05-5FBF-4AE5-A03B-30F1B64D50D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97FA5D05-5FBF-4AE5-A03B-30F1B64D50D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
