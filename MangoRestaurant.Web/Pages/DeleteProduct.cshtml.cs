@@ -1,11 +1,13 @@
 using MangoRestaurant.Web.Models.Dtos;
 using MangoRestaurant.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MangoRestaurant.Web.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteProductModel : PageModel
     {
         private readonly IProductService productService;
