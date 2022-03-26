@@ -1,5 +1,6 @@
 using MangoRestaurant.Web.Models.Dtos;
 using MangoRestaurant.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -18,7 +19,8 @@ namespace MangoRestaurant.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
-            ResponseDto<IEnumerable<ProductDto>> getAllProductsResponse = await productService.GetAllProductsAsync<ResponseDto<IEnumerable<ProductDto>>>();
+            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            ResponseDto<IEnumerable<ProductDto>> getAllProductsResponse = await productService.GetAllProductsAsync<ResponseDto<IEnumerable<ProductDto>>>(accessToken);
 
             if (getAllProductsResponse?.Result != null && getAllProductsResponse.IsSuccess)
             {
