@@ -2,6 +2,7 @@
 using MangoRestaurant.Web.Models.Requests;
 using MangoRestaurant.Web.Services.Base.Interfaces;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace MangoRestaurant.Web.Services.Base
@@ -25,8 +26,7 @@ namespace MangoRestaurant.Web.Services.Base
         {
             try
             {
-                HttpClient client = HttpClientFactory.CreateClient("MangoRestaurantAPI");
-                client.DefaultRequestHeaders.Clear();
+                HttpClient client = GenerateClientUsingClientFactory(apiRequest.Token);
 
                 HttpRequestMessage message = GetConfiguredMessageFromApiRequest(apiRequest);
                 HttpResponseMessage apiResponse = await client.SendAsync(message);
@@ -45,6 +45,19 @@ namespace MangoRestaurant.Web.Services.Base
 
                 return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(errorDto));
             }
+        }
+
+        private HttpClient GenerateClientUsingClientFactory(string accessToken)
+        {
+            HttpClient client = HttpClientFactory.CreateClient("MangoRestaurantAPI");
+            client.DefaultRequestHeaders.Clear();
+
+            if (!string.IsNullOrWhiteSpace(accessToken))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            }
+
+            return client;
         }
 
         private static async Task<T> DeserializeHttpResponseMessage<T>(HttpResponseMessage apiResponse)
