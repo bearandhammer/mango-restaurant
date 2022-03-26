@@ -14,55 +14,55 @@ namespace MangoRestaurant.Web.Services
         }
 
         // Can just return tasks here, to adjust
-        public async Task<T> CreateProductAsync<T>(ProductDto productDto)
+        public async Task<T> CreateProductAsync<T>(ProductDto productDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiHelper.ApiType.POST,
                 Data = productDto,
                 Url = $"{ ApiHelper.ProductApiBase }api/products",
-                Token = string.Empty
+                Token = token
             });
         }
 
-        public async Task<T> DeleteProductAsync<T>(int id)
+        public async Task<T> DeleteProductAsync<T>(int id, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiHelper.ApiType.DELETE,
                 Url = $"{ ApiHelper.ProductApiBase }api/products/{ id }",
-                Token = string.Empty
+                Token = token
             });
         }
 
-        public async Task<T> GetAllProductsAsync<T>()
+        public async Task<T> GetAllProductsAsync<T>(string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiHelper.ApiType.GET,
                 Url = $"{ ApiHelper.ProductApiBase }api/products",
-                Token = string.Empty
+                Token = token
             });
         }
 
-        public async Task<T> GetProductByIdAsync<T>(int id)
+        public async Task<T> GetProductByIdAsync<T>(int id, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiHelper.ApiType.GET,
                 Url = $"{ ApiHelper.ProductApiBase }api/products/{ id }",
-                Token = string.Empty
+                Token = token
             });
         }
 
-        public async Task<T> UpdateProductAsync<T>(ProductDto productDto)
+        public async Task<T> UpdateProductAsync<T>(ProductDto productDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = ApiHelper.ApiType.PUT,
                 Data = productDto,
                 Url = $"{ ApiHelper.ProductApiBase }api/products",
-                Token = string.Empty
+                Token = token
             });
         }
     }
