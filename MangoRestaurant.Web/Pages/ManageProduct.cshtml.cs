@@ -1,5 +1,6 @@
 using MangoRestaurant.Web.Models.Dtos;
 using MangoRestaurant.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -25,7 +26,8 @@ namespace MangoRestaurant.Web.Pages
             }
             else
             {
-                ResponseDto<ProductDto> getResponse = await productService.GetProductByIdAsync<ResponseDto<ProductDto>>(id);
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
+                ResponseDto<ProductDto> getResponse = await productService.GetProductByIdAsync<ResponseDto<ProductDto>>(id, accessToken);
 
                 if (getResponse != null && getResponse.IsSuccess)
                 {
@@ -40,9 +42,10 @@ namespace MangoRestaurant.Web.Pages
         {
             if (ModelState.IsValid)
             {
+                string accessToken = await HttpContext.GetTokenAsync("access_token");
                 ResponseDto<ProductDto> response = Product.Id == 0 
-                    ? await productService.CreateProductAsync<ResponseDto<ProductDto>>(Product)
-                    : await productService.UpdateProductAsync<ResponseDto<ProductDto>>(Product);
+                    ? await productService.CreateProductAsync<ResponseDto<ProductDto>>(Product, accessToken)
+                    : await productService.UpdateProductAsync<ResponseDto<ProductDto>>(Product, accessToken);
 
                 if (response != null && response.IsSuccess)
                 {

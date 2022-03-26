@@ -1,5 +1,6 @@
 using MangoRestaurant.Web.Models.Dtos;
 using MangoRestaurant.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -19,7 +20,8 @@ namespace MangoRestaurant.Web.Pages
 
         public async Task<IActionResult> OnGet(int id)
         {
-            ResponseDto<ProductDto> getResponse = await productService.GetProductByIdAsync<ResponseDto<ProductDto>>(id);
+            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            ResponseDto<ProductDto> getResponse = await productService.GetProductByIdAsync<ResponseDto<ProductDto>>(id, accessToken);
 
             if (getResponse != null && getResponse.IsSuccess)
             {
@@ -32,7 +34,8 @@ namespace MangoRestaurant.Web.Pages
         // Yuck - use correct verb going forward
         public async Task<IActionResult> OnPost()
         {
-            ResponseDto<bool> response = await productService.DeleteProductAsync<ResponseDto<bool>>(Product.Id);
+            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            ResponseDto<bool> response = await productService.DeleteProductAsync<ResponseDto<bool>>(Product.Id, accessToken);
 
             if (response != null && response.IsSuccess)
             {
