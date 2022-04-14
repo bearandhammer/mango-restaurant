@@ -43,6 +43,7 @@ namespace MangoRestaurant.Product.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ResponseDto<IEnumerable<ProductDto>>> Get()
         {
             // TODO: ICollection?
