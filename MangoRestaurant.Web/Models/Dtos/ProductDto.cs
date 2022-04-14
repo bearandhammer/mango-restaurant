@@ -1,4 +1,5 @@
 ﻿using MangoRestaurant.Web.Models.Dtos.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace MangoRestaurant.Web.Models.Dtos
 {
@@ -32,5 +33,8 @@ namespace MangoRestaurant.Web.Models.Dtos
         /// Gets or sets the Product Image URL.
         /// </summary>
         public string? ImageUrl { get; set; }
+
+        [Range(1, 100)]
+        public int Count { get; set; } = 1;
     }
 }
