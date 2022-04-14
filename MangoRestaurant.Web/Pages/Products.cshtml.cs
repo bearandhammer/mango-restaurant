@@ -19,8 +19,7 @@ namespace MangoRestaurant.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
-            string accessToken = await HttpContext.GetTokenAsync("access_token");
-            ResponseDto<IEnumerable<ProductDto>> getAllProductsResponse = await productService.GetAllProductsAsync<ResponseDto<IEnumerable<ProductDto>>>(accessToken);
+            ResponseDto<IEnumerable<ProductDto>> getAllProductsResponse = await productService.GetAllProductsAsync<ResponseDto<IEnumerable<ProductDto>>>(string.Empty);
 
             if (getAllProductsResponse?.Result != null && getAllProductsResponse.IsSuccess)
             {
