@@ -19,7 +19,7 @@
                             <p class="card-text">@product.Description</p>
                             <div class="row">
                                 <div class="col pt-1">
-                                    <span style="font-size:23px;">@string.Format("0:c", product.Price)</span>
+                                    <span style="font-size:23px;">@string.Format("{0:c}", product.Price)</span>
                                 </div>
                                 <div class="col">
                                     <a asp-page="/ProductDetail" asp-route-id="@product.Id" class="btn btn-success form-control">Details</a>
