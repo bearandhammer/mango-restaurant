@@ -29,11 +29,12 @@
                                         <span class="badge badge-primary text-success p-3 border">@Model.Product.CategoryName</span>
                                         <h3 class="text-success"></h3>
 
-                                        <p class="text-secondary">Html.Raw(Model.Product.Description)</p>
+                                        <p class="text-secondary">@Html.Raw(Model.Product.Description)</p>
                                     </div>
                                 </div>
                                 <div class="row px-4">
-                                    <input class="form-control" />
+                                    <input asp-for="@Model.Product.Count" class="form-control" />
+                                    <span asp-validation-for="@Model.Product.Count" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
