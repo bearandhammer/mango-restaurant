@@ -54,16 +54,26 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
             }
             else
             {
-                // TODO
+                CartDetails existingCartDetails = dbContext.CartDetails
+                    .FirstOrDefault(cartDetail => cartDetail.ProductId == cart.CartDetails.First().ProductId
+                        && cartDetail.CartHeaderId == existingCartHeader.Id);
+
+                // TODO: flesh out logic
+                if (existingCartDetails == null)
+                {
+                    
+                }
             }
 
+
+            // TODO: Fix return type
             return null;
         }
 
         private async Task CreateProductIfMissing(CartDto cartDto, Cart cart)
         {
             Product existingProduct = dbContext.Products
-                            .FirstOrDefault(product => product.Id == cartDto.CartDetails.First().ProductId);
+                .FirstOrDefault(product => product.Id == cartDto.CartDetails.First().ProductId);
 
             if (existingProduct == null)
             {
