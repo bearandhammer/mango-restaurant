@@ -36,14 +36,7 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
         {
             Cart cart = mapper.Map<Cart>(cartDto);
 
-            Product existingProduct = dbContext.Products
-                .FirstOrDefault(product => product.Id == cartDto.CartDetails.First().ProductId);
-
-            if (existingProduct == null)
-            {
-                dbContext.Products.Add(cart.CartDetails.First().Product);
-                await dbContext.SaveChangesAsync();
-            }
+            await CreateProductIfMissing(cartDto, cart);
 
             CartHeader existingCartHeader = dbContext.CartHeaders
                 .FirstOrDefault(cartHeader => cartHeader.UserId == cart.CartHeader.UserId);
@@ -59,8 +52,24 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
                 dbContext.CartDetails.Add(cart.CartDetails.First());
                 await dbContext.SaveChangesAsync();
             }
+            else
+            {
+                // TODO
+            }
 
             return null;
+        }
+
+        private async Task CreateProductIfMissing(CartDto cartDto, Cart cart)
+        {
+            Product existingProduct = dbContext.Products
+                            .FirstOrDefault(product => product.Id == cartDto.CartDetails.First().ProductId);
+
+            if (existingProduct == null)
+            {
+                dbContext.Products.Add(cart.CartDetails.First().Product);
+                await dbContext.SaveChangesAsync();
+            }
         }
     }
 }
