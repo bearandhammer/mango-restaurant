@@ -55,7 +55,26 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
 
         public async Task<bool> RemoveFromCart(int cartDetailsId)
         {
-            throw new NotImplementedException();
+            CartDetails cartDetails = await dbContext.CartDetails
+                .FirstOrDefaultAsync(cartDetail => cartDetail.Id == cartDetailsId);
+
+            int totalCountOfCartItems = await dbContext.CartDetails
+                .Where(cartDetail => cartDetail.CartHeaderId == cartDetails.CartHeaderId)
+                .CountAsync();
+
+            dbContext.CartDetails.Remove(cartDetails);
+
+            if (totalCountOfCartItems == 1)
+            {
+                CartHeader cartHeaderToRemove = await dbContext.CartHeaders
+                    .FirstOrDefaultAsync(cartHeader => cartHeader.Id == cartDetails.CartHeaderId);
+
+                dbContext.CartHeaders.Remove(cartHeaderToRemove);
+            }
+
+            await dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<CartDto> UpsertCart(CartDto cartDto)
