@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MongoRestaurant.ShoppingCart.API.Context;
 using MongoRestaurant.ShoppingCart.API.Models.Entity;
 using MongoRestaurant.ShoppingCart.API.Repositories.Interfaces;
@@ -37,8 +38,15 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
             Cart cart = mapper.Map<Cart>(cartDto);
 
             await CreateProductIfMissing(cartDto, cart);
+            await SaveCartData(cart);
 
+            return mapper.Map<CartDto>(cart);
+        }
+
+        private async Task SaveCartData(Cart cart)
+        {
             CartHeader existingCartHeader = dbContext.CartHeaders
+                .AsNoTracking()
                 .FirstOrDefault(cartHeader => cartHeader.UserId == cart.CartHeader.UserId);
 
             if (existingCartHeader == null)
@@ -55,19 +63,27 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
             else
             {
                 CartDetails existingCartDetails = dbContext.CartDetails
+                    .AsNoTracking()
                     .FirstOrDefault(cartDetail => cartDetail.ProductId == cart.CartDetails.First().ProductId
                         && cartDetail.CartHeaderId == existingCartHeader.Id);
 
-                // TODO: flesh out logic
                 if (existingCartDetails == null)
                 {
-                    
+                    cart.CartDetails.First().CartHeaderId = existingCartDetails.CartHeaderId;
+                    cart.CartDetails.First().Product = null;
+
+                    dbContext.CartDetails.Add(cart.CartDetails.First());
+                    await dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    cart.CartDetails.First().Count += existingCartDetails.Count;
+                    cart.CartDetails.First().Product = null;
+
+                    dbContext.CartDetails.Update(cart.CartDetails.First());
+                    await dbContext.SaveChangesAsync();
                 }
             }
-
-
-            // TODO: Fix return type
-            return null;
         }
 
         private async Task CreateProductIfMissing(CartDto cartDto, Cart cart)
