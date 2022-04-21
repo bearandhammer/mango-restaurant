@@ -39,7 +39,18 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
 
         public async Task<CartDto> GetCartByUserId(string userId)
         {
-            throw new NotImplementedException();
+            Cart cart = new Cart
+            {
+                CartHeader = await dbContext.CartHeaders
+                    .FirstOrDefaultAsync(cartHeader => cartHeader.UserId == userId)
+            };
+
+            cart.CartDetails = await dbContext.CartDetails
+                .Where(cartDetail => cartDetail.CartHeaderId == cart.CartHeader.Id)
+                .Include(cartDetail => cartDetail.Product)
+                .ToListAsync();
+
+            return mapper.Map<CartDto>(cart);
         }
 
         public async Task<bool> RemoveFromCart(int cartDetailsId)
