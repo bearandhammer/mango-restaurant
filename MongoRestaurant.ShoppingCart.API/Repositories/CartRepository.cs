@@ -20,7 +20,21 @@ namespace MongoRestaurant.ShoppingCart.API.Repositories
 
         public async Task<bool> ClearCart(string userId)
         {
-            throw new NotImplementedException();
+            var existingCartHeader = dbContext.CartHeaders
+                .FirstOrDefault(cartHeader => cartHeader.UserId == userId);
+
+            if (existingCartHeader != null)
+            {
+                dbContext.CartDetails.RemoveRange(
+                    dbContext.CartDetails.Where(cartDetail => cartDetail.CartHeaderId == existingCartHeader.Id));
+                dbContext.CartHeaders.Remove(existingCartHeader);
+
+                await dbContext.SaveChangesAsync();
+
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<CartDto> GetCartByUserId(string userId)
