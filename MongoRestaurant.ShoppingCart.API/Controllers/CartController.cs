@@ -16,6 +16,9 @@ namespace MongoRestaurant.ShoppingCart.API.Controllers
             cartRepository = cartRepositoryType;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ResponseDto<CartDto>>> AddCart(CartDto cartDto) => await UpsertCart(cartDto);
+
         [HttpGet("{userId}")]
         public async Task<ActionResult<ResponseDto<CartDto>>> GetCart(string userId)
         {
@@ -34,8 +37,23 @@ namespace MongoRestaurant.ShoppingCart.API.Controllers
             return response;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ResponseDto<CartDto>>> AddCart(CartDto cartDto) => await UpsertCart(cartDto);
+        [HttpDelete]
+        public async Task<ActionResult<ResponseDto<bool>>> RemoveCart(int cartId)
+        {
+            ResponseDto<bool> response = new ResponseDto<bool>();
+
+            try
+            {
+                response.Result = await cartRepository.RemoveFromCart(cartId);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return response;
+        }
 
         [HttpPut]
         public async Task<ActionResult<ResponseDto<CartDto>>> UpdateCart(CartDto cartDto) => await UpsertCart(cartDto);
