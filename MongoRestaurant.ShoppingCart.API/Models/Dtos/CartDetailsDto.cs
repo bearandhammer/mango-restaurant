@@ -1,4 +1,5 @@
-﻿using MangoRestaurant.ShoppingCart.API.Models.Dtos.Base;
+﻿using MangoRestaurant.ShoppingCart.API.Models.Dtos;
+using MangoRestaurant.ShoppingCart.API.Models.Dtos.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MongoRestaurant.ShoppingCart.API.Models.Entity
@@ -11,7 +12,7 @@ namespace MongoRestaurant.ShoppingCart.API.Models.Entity
 
         public int ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public ProductDto Product { get; set; }
 
         public int Count { get; set; }
     }
