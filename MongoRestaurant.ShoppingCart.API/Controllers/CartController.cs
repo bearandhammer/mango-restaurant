@@ -33,5 +33,41 @@ namespace MongoRestaurant.ShoppingCart.API.Controllers
 
             return response;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ResponseDto<CartDto>>> AddCart(CartDto cartDto)
+        {
+            ResponseDto<CartDto> response = new ResponseDto<CartDto>();
+
+            try
+            {
+                response.Result = await cartRepository.UpsertCart(cartDto);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return response;
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ResponseDto<CartDto>>> UpdateCart(CartDto cartDto)
+        {
+            ResponseDto<CartDto> response = new ResponseDto<CartDto>();
+
+            try
+            {
+                response.Result = await cartRepository.UpsertCart(cartDto);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return response;
+        }
     }
 }
