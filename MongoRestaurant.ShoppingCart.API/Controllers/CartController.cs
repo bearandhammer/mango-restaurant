@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MangoRestaurant.Product.API.Models.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using MongoRestaurant.ShoppingCart.API.Models.Entity;
+using MongoRestaurant.ShoppingCart.API.Repositories.Interfaces;
 
 namespace MongoRestaurant.ShoppingCart.API.Controllers
 {
@@ -6,9 +9,29 @@ namespace MongoRestaurant.ShoppingCart.API.Controllers
     [Route("api/cart")]
     public class CartController : Controller
     {
-        public IActionResult Index()
+        private readonly ICartRepository cartRepository;
+
+        public CartController(ICartRepository cartRepositoryType)
         {
-            return View();
+            cartRepository = cartRepositoryType;
+        }
+
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<ResponseDto<CartDto>>> GetCart(string userId)
+        {
+            ResponseDto<CartDto> response = new ResponseDto<CartDto>();
+
+            try
+            {
+                response.Result = await cartRepository.GetCartByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.ErrorMessages = new List<string> { ex.ToString() };
+            }
+
+            return response;
         }
     }
 }
