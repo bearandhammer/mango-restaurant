@@ -9,6 +9,7 @@ builder.Services.AddHttpClient<IProductService, ProductService>();
 
 // Configure Base URLs
 ApiHelper.ProductApiBase = builder.Configuration["APIBaseUrls:ProductAPI"];
+ApiHelper.ShoppingCartApiBase = builder.Configuration["APIBaseUrls:ShoppingCartAPI"];
 
 // Register Services
 builder.Services.AddScoped<IProductService, ProductService>();
