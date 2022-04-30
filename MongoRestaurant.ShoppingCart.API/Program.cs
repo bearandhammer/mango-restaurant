@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MongoRestaurant.ShoppingCart.API.Context;
 using MongoRestaurant.ShoppingCart.API.Mappings;
+using MongoRestaurant.ShoppingCart.API.Repositories;
+using MongoRestaurant.ShoppingCart.API.Repositories.Interfaces;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +18,8 @@ IMapper mapper = AutoMapperConfig.RegisterMappings().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//// Register custom services
-//builder.Services.AddScoped<IProductRepository, ProductRepository>();
+// Register custom services
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 builder.Services.AddControllers();
 
