@@ -24,14 +24,24 @@ namespace MangoRestaurant.Web.Services
             });
         }
 
-        public Task<T> GetCartByUserIdAsync<T>(string userId, string token = null)
+        public async Task<T> GetCartByUserIdAsync<T>(string userId, string token = null)
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequest()
+            {
+                ApiType = ApiHelper.ApiType.GET,
+                Url = $"{ ApiHelper.ShoppingCartApiBase }api/cart/{ userId }",
+                Token = token
+            });
         }
 
-        public Task<T> RemoveFromCartAsync<T>(int cartDetailsId, string token = null)
+        public async Task<T> RemoveFromCartAsync<T>(int cartDetailsId, string token = null)
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequest()
+            {
+                ApiType = ApiHelper.ApiType.DELETE,
+                Url = $"{ ApiHelper.ShoppingCartApiBase }api/cart/{ cartDetailsId }",
+                Token = token
+            });
         }
 
         public Task<T> UpdateCartAsync<T>(CartDto cartDto, string token = null)
