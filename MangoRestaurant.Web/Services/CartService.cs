@@ -8,7 +8,7 @@ namespace MangoRestaurant.Web.Services
 {
     public class CartService : BaseService, ICartService
     {
-        public CartService(IHttpClientFactory clientFactoryType) 
+        public CartService(IHttpClientFactory clientFactoryType)
             : base(clientFactoryType)
         {
         }
@@ -44,9 +44,15 @@ namespace MangoRestaurant.Web.Services
             });
         }
 
-        public Task<T> UpdateCartAsync<T>(CartDto cartDto, string token = null)
+        public async Task<T> UpdateCartAsync<T>(CartDto cartDto, string token = null)
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequest()
+            {
+                ApiType = ApiHelper.ApiType.PUT,
+                Data = cartDto,
+                Url = $"{ ApiHelper.ShoppingCartApiBase }api/cart",
+                Token = token
+            });
         }
     }
 }
