@@ -13,6 +13,7 @@ ApiHelper.ShoppingCartApiBase = builder.Configuration["APIBaseUrls:ShoppingCartA
 
 // Register Services
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 // Add Razor Pages
 builder.Services.AddRazorPages();
